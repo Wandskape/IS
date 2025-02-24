@@ -33,34 +33,37 @@ console.log(`Энтропия английского языка: ${entropy(enCha
 //fr
 let frCharsArray: AssociativeArray = {}
 
-for(const char of enAlphabet){
+for(const char of frAlphabet){
     frCharsArray[char] = 0
 }
 
 const frFilePath:string = './texts/fr.txt'
 
-frCharsArray = symbolCount(frCharsArray, enAlphabet, enFilePath)
+frCharsArray = symbolCount(frCharsArray, frAlphabet, enFilePath)
 console.log(`Энтропия французского языка: ${entropy(frCharsArray)}`)
-
-//bin
-let binCharsArray: AssociativeArray = {}
-
-for(const char of binAlphabet){
-    binCharsArray[char] = 0
-}
-
-const binFilePath:string = './texts/bin.txt'
-
-binCharsArray = symbolCount(binCharsArray, binAlphabet, binFilePath)
-console.log(`Энтропия бинарного языка: ${entropy(binCharsArray)}`)
 
 function amountOfInformation(message:string, alphabetEntropy):number{
     return alphabetEntropy * message.length;
 }
 
+//bin test
+//bin
+let binRCharsArray: AssociativeArray = {}
+
+for(const char of binAlphabet){
+    binRCharsArray[char] = 0
+}
+
+const binRFilePath:string = './texts/bin.txt'
+
+binRCharsArray = symbolCount(binRCharsArray, binAlphabet, binRFilePath)
+console.log(`Энтропия бинарного языка bin test: ${entropy(binRCharsArray)}`)
+
+//
+
 const message:string = 'коломейчукарсенийалексеевич'
 console.log(`Количество информации в сообщении на русском языке: ${message}, ровна ${amountOfInformation(message, entropy(ruCharsArray))}`)
-console.log(`Количество информации в сообщении в кодах ASCII: ${message}, ровна ${message.length * 8}`)
+console.log(`Количество информации в сообщении в кодах: ${message}, ровна ${amountOfInformation(message,entropy(binRCharsArray))}`)
 
 function entropyWithIssue(entropy:number, probability: number):number{
     entropy += probability * Math.log2(probability) + (1 - probability) * Math.log2(1 - probability)

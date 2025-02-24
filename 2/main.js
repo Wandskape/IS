@@ -22,28 +22,30 @@ enCharsArray = (0, readFiles_1.symbolCount)(enCharsArray, alphabets_1.enAlphabet
 console.log("\u042D\u043D\u0442\u0440\u043E\u043F\u0438\u044F \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u043E\u0433\u043E \u044F\u0437\u044B\u043A\u0430: ".concat(entropy(enCharsArray)));
 //fr
 var frCharsArray = {};
-for (var _b = 0, enAlphabet_2 = alphabets_1.enAlphabet; _b < enAlphabet_2.length; _b++) {
-    var char = enAlphabet_2[_b];
+for (var _b = 0, frAlphabet_1 = alphabets_1.frAlphabet; _b < frAlphabet_1.length; _b++) {
+    var char = frAlphabet_1[_b];
     frCharsArray[char] = 0;
 }
 var frFilePath = './texts/fr.txt';
-frCharsArray = (0, readFiles_1.symbolCount)(frCharsArray, alphabets_1.enAlphabet, enFilePath);
+frCharsArray = (0, readFiles_1.symbolCount)(frCharsArray, alphabets_1.frAlphabet, enFilePath);
 console.log("\u042D\u043D\u0442\u0440\u043E\u043F\u0438\u044F \u0444\u0440\u0430\u043D\u0446\u0443\u0437\u0441\u043A\u043E\u0433\u043E \u044F\u0437\u044B\u043A\u0430: ".concat(entropy(frCharsArray)));
-//bin
-var binCharsArray = {};
-for (var _c = 0, binAlphabet_1 = alphabets_1.binAlphabet; _c < binAlphabet_1.length; _c++) {
-    var char = binAlphabet_1[_c];
-    binCharsArray[char] = 0;
-}
-var binFilePath = './texts/bin.txt';
-binCharsArray = (0, readFiles_1.symbolCount)(binCharsArray, alphabets_1.binAlphabet, binFilePath);
-console.log("\u042D\u043D\u0442\u0440\u043E\u043F\u0438\u044F \u0431\u0438\u043D\u0430\u0440\u043D\u043E\u0433\u043E \u044F\u0437\u044B\u043A\u0430: ".concat(entropy(binCharsArray)));
 function amountOfInformation(message, alphabetEntropy) {
     return alphabetEntropy * message.length;
 }
+//bin test
+//bin
+var binRCharsArray = {};
+for (var _c = 0, binAlphabet_1 = alphabets_1.binAlphabet; _c < binAlphabet_1.length; _c++) {
+    var char = binAlphabet_1[_c];
+    binRCharsArray[char] = 0;
+}
+var binRFilePath = './texts/bin.txt';
+binRCharsArray = (0, readFiles_1.symbolCount)(binRCharsArray, alphabets_1.binAlphabet, binRFilePath);
+console.log("\u042D\u043D\u0442\u0440\u043E\u043F\u0438\u044F \u0431\u0438\u043D\u0430\u0440\u043D\u043E\u0433\u043E \u044F\u0437\u044B\u043A\u0430 bin test: ".concat(entropy(binRCharsArray)));
+//
 var message = 'коломейчукарсенийалексеевич';
 console.log("\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u0432 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0438 \u043D\u0430 \u0440\u0443\u0441\u0441\u043A\u043E\u043C \u044F\u0437\u044B\u043A\u0435: ".concat(message, ", \u0440\u043E\u0432\u043D\u0430 ").concat(amountOfInformation(message, entropy(ruCharsArray))));
-console.log("\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u0432 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0438 \u0432 \u043A\u043E\u0434\u0430\u0445 ASCII: ".concat(message, ", \u0440\u043E\u0432\u043D\u0430 ").concat(message.length * 8));
+console.log("\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438 \u0432 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0438 \u0432 \u043A\u043E\u0434\u0430\u0445: ".concat(message, ", \u0440\u043E\u0432\u043D\u0430 ").concat(amountOfInformation(message, entropy(binRCharsArray))));
 function entropyWithIssue(entropy, probability) {
     entropy += probability * Math.log2(probability) + (1 - probability) * Math.log2(1 - probability);
     console.log("EntropyERROR: ".concat(entropy));
