@@ -65,4 +65,34 @@ console.log(n, n / Math.log(n));
 primeNumbers = primeRange(399, 443);
 n = primeNumbers.length;
 console.log(primeNumbers);
-console.log(n, n / Math.log(n));
+console.log(n, n / Math.log(n)); //мессены проверить диапозон что числа мессены являются простыми
+function mersenNumbers(borderStart, borderEnd) {
+    var mersenNums = [];
+    for (; borderStart <= borderEnd; borderStart++) {
+        mersenNums.push(Math.pow(2, borderStart) - 1);
+        console.log(mersenNums[-1]);
+    }
+    console.log("-------------END--------------");
+    return mersenNums;
+}
+function testMersenNums(mersenNums) {
+    var mersenAndPrime = [];
+    for (var x = 0; x <= mersenNums.length; x++) {
+        if (IsPrime(mersenNums[x])) {
+            console.log(mersenNums[x], " IsPrime");
+            mersenAndPrime.push(mersenNums[x]);
+        }
+        else {
+            console.log(mersenNums[x], " NotPrime");
+        }
+    }
+    return mersenAndPrime;
+}
+printMersen(1, 10000);
+function printMersen(borderStart, borderEnd) {
+    for (; borderStart <= borderEnd; borderStart++) {
+        if (IsPrime(borderStart)) {
+            console.log("2^".concat(borderStart, "-1"));
+        }
+    }
+}
