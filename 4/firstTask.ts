@@ -1,4 +1,20 @@
 import * as fs from 'fs';
+import {enAlphabet} from "./alphabets"
+import {AssociativeArray} from "./main";
+
+function codes(alphabet: string): number[] {
+    const alphabetCodes: number[] = [];
+    for (const char of alphabet) {
+        alphabetCodes.push(char.charCodeAt(0));
+    }
+    return alphabetCodes;
+}
+
+let charArray: AssociativeArray = {}
+
+for(const char of enAlphabet){
+    charArray[char] = 0
+}
 
 function caesarModified(
     originalTextPath: string,
@@ -7,9 +23,9 @@ function caesarModified(
     alphabetLength: number,
     alphabetDivisionCode: number,
     isEncryption: boolean
-): void {
+): AssociativeArray {
     let partialLine: string = "";
-
+    const alphabetCodes: number[] = codes(enAlphabet);
     const readStream = fs.createReadStream(originalTextPath, { encoding: 'utf8' });
     const writeStream = fs.createWriteStream(encryptedTextPath);
 
@@ -20,6 +36,11 @@ function caesarModified(
 
         for (let line of lines) {
             line = line.toLowerCase();
+            for (const char of line) {
+                if (alphabetCodes.includes(char.charCodeAt(0))) {
+                    charArray[char]++;
+                }
+            }
             let encryptedText = stringTransformation(line, k, alphabetLength, alphabetDivisionCode, isEncryption);
             writeStream.write(encryptedText + '\n');
         }
@@ -37,6 +58,7 @@ function caesarModified(
 
     readStream.on('error', (err: Error) => console.error('Ошибка при чтении файла:', err));
     writeStream.on('error', (err: Error) => console.error('Ошибка при записи файла:', err));
+    return charArray
 }
 
 function stringTransformation(

@@ -21,7 +21,7 @@ function VigenerCipher(
 
         for (let line of lines) {
             line = line.toLowerCase();
-            const { encryptedText, newKeyIndex } = stringEncryption(line, key, keyIndex, alphabetDivisionCode, alphabetLength);
+            const { encryptedText, newKeyIndex } = stringDecryption(line, key, keyIndex, alphabetDivisionCode, alphabetLength);
             keyIndex = newKeyIndex;
             writeStream.write(encryptedText + '\n');
         }
@@ -30,7 +30,7 @@ function VigenerCipher(
     readStream.on('end', () => {
         if (partialLine) {
             partialLine = partialLine.toLowerCase();
-            const { encryptedText, newKeyIndex } = stringEncryption(partialLine, key, keyIndex, alphabetDivisionCode, alphabetLength);
+            const { encryptedText, newKeyIndex } = stringDecryption(partialLine, key, keyIndex, alphabetDivisionCode, alphabetLength);
             keyIndex = newKeyIndex;
             writeStream.write(encryptedText + '\n');
         }
@@ -57,11 +57,8 @@ function stringEncryption(
         const keyCharCode = keyChar.charCodeAt(0);
         let symbolCode;
 
-        if (char === " ") {
-            symbolCode = (charCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
-        } else {
-            symbolCode = (charCode - alphabetDivisionCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
-        }
+
+        symbolCode = (charCode - alphabetDivisionCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
 
         if (symbolCode < 0) symbolCode += alphabetLength;
 

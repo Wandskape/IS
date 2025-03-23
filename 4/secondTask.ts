@@ -59,9 +59,9 @@ function transformChar(char: string, isEncryption: boolean): string {
     let col = pos % 5;
 
     if (isEncryption) {
-        row = (row + 1) % 5; //сдвиг вниз
+        row = (row + 1) % 5;
     } else {
-        row = (row - 1 + 5) % 5; //сдвиг вверх
+        row = (row - 1 + 5) % 5;
     }
 
     return TABLE[row * 5 + col];

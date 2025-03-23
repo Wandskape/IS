@@ -17,7 +17,7 @@ function VigenerCipher(alphabetLength, alphabetDivisionCode, key, originalTextPa
         for (var _i = 0, lines_1 = lines; _i < lines_1.length; _i++) {
             var line = lines_1[_i];
             line = line.toLowerCase();
-            var _a = stringEncryption(line, key, keyIndex, alphabetDivisionCode, alphabetLength), encryptedText = _a.encryptedText, newKeyIndex = _a.newKeyIndex;
+            var _a = stringDecryption(line, key, keyIndex, alphabetDivisionCode, alphabetLength), encryptedText = _a.encryptedText, newKeyIndex = _a.newKeyIndex;
             keyIndex = newKeyIndex;
             writeStream.write(encryptedText + '\n');
         }
@@ -25,7 +25,7 @@ function VigenerCipher(alphabetLength, alphabetDivisionCode, key, originalTextPa
     readStream.on('end', function () {
         if (partialLine) {
             partialLine = partialLine.toLowerCase();
-            var _a = stringEncryption(partialLine, key, keyIndex, alphabetDivisionCode, alphabetLength), encryptedText = _a.encryptedText, newKeyIndex = _a.newKeyIndex;
+            var _a = stringDecryption(partialLine, key, keyIndex, alphabetDivisionCode, alphabetLength), encryptedText = _a.encryptedText, newKeyIndex = _a.newKeyIndex;
             keyIndex = newKeyIndex;
             writeStream.write(encryptedText + '\n');
         }
@@ -43,12 +43,7 @@ function stringEncryption(line, key, keyIndex, alphabetDivisionCode, alphabetLen
         var charCode = char.charCodeAt(0);
         var keyCharCode = keyChar.charCodeAt(0);
         var symbolCode = void 0;
-        if (char === " ") {
-            symbolCode = (charCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
-        }
-        else {
-            symbolCode = (charCode - alphabetDivisionCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
-        }
+        symbolCode = (charCode - alphabetDivisionCode + keyCharCode - alphabetDivisionCode) % alphabetLength;
         if (symbolCode < 0)
             symbolCode += alphabetLength;
         outputLine += String.fromCharCode(symbolCode + alphabetDivisionCode);
