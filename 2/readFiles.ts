@@ -52,3 +52,5 @@ function symbolCount(charArray: AssociativeArray, alphabet: string, filePath: st
 }
 
 export { symbolCount };
+
+
