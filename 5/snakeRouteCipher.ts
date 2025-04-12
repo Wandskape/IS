@@ -51,9 +51,13 @@ function snakeRouteCipher(inputPath: string, outputPath: string, mode: 'encrypt'
         freq[char] = (freq[char] || 0) + 1;
     });
 
+    const freqString = Object.entries(freq)
+        .map(([char, count]) => `${char}: ${count}`)
+        .join(', ');
+
     fs.writeFileSync(outputPath, result, { encoding: 'utf8' });
     const endTime = Date.now();
-    console.log(`Частота символов:`, freq);
+    console.log(`Частота символов:`, freqString);
     console.log(`Маршрутная перестановка (${mode}): ${endTime - startTime} мс`);
 }
 

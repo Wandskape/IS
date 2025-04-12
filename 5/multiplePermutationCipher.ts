@@ -49,7 +49,7 @@ function multiplePermutationCipher(inputPath: string, outputPath: string, mode: 
         }
 
         result = permutedTable.map((row) => row.join('')).join('');
-        result = result.replace(/\*+$/g, ''); // Удаляем заполнители
+        result = result.replace(/\*+$/g, '');
     }
 
     const freq: Record<string, number> = {};
@@ -57,11 +57,13 @@ function multiplePermutationCipher(inputPath: string, outputPath: string, mode: 
         freq[char] = (freq[char] || 0) + 1;
     });
 
-    console.log('Частота символов:', freq);
+    const freqString = Object.entries(freq)
+        .map(([char, count]) => `${char}: ${count}`)
+        .join(', ');
 
     fs.writeFileSync(outputPath, result, { encoding: 'utf8' });
-
     const endTime = Date.now();
+    console.log('Частота символов:', freqString);
     console.log(`Множественная перестановка (${mode}): ${endTime - startTime} мс`);
 }
 

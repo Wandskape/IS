@@ -21,6 +21,7 @@ function VigenerDecryptor(encryptedTextPath: string, decryptedTextPath: string):
                 // подсчёт частоты символов в подстроке
                 const freq = substr.split('').reduce((acc, char) => ({ ...acc, [char]: (acc[char] || 0) + 1 }), {} as Record<string, number>);
                 const substrLength = substr.length;
+
                 return sum + Object.values(freq).reduce((acc, f) => acc + (f * (f - 1)) / (substrLength * (substrLength - 1)), 0);
             }, 0) / substrings.length;
 

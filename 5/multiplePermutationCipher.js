@@ -5,12 +5,11 @@ var fs = require("fs");
 function multiplePermutationCipher(inputPath, outputPath, mode, rowKey, colKey) {
     var startTime = Date.now();
     var text = fs.readFileSync(inputPath, { encoding: 'utf8' })
-        .replace(/\s/g, '') // Удаляем пробелы
-        .toLowerCase(); // Приводим к нижнему регистру
+        .replace(/\s/g, '')
+        .toLowerCase();
     var ROWS = rowKey.length;
     var COLS = colKey.length;
     var tableSize = ROWS * COLS;
-    // Если длина текста меньше таблицы, добавляем заполнитель '*'
     if (mode === 'encrypt') {
         while (text.length % tableSize !== 0) {
             text += '*';
@@ -45,14 +44,20 @@ function multiplePermutationCipher(inputPath, outputPath, mode, rowKey, colKey) 
             }
         }
         result = permutedTable.map(function (row) { return row.join(''); }).join('');
-        result = result.replace(/\*+$/g, ''); // Удаляем заполнители
+        result = result.replace(/\*+$/g, '');
     }
     var freq = {};
     result.split('').forEach(function (char) {
         freq[char] = (freq[char] || 0) + 1;
     });
-    console.log('Частота символов:', freq);
+    var freqString = Object.entries(freq)
+        .map(function (_a) {
+        var char = _a[0], count = _a[1];
+        return "".concat(char, ": ").concat(count);
+    })
+        .join(', ');
     fs.writeFileSync(outputPath, result, { encoding: 'utf8' });
     var endTime = Date.now();
+    console.log('Частота символов:', freqString);
     console.log("\u041C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u0430\u044F \u043F\u0435\u0440\u0435\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 (".concat(mode, "): ").concat(endTime - startTime, " \u043C\u0441"));
 }
